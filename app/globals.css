@@ -1,0 +1,40 @@
+:root {
+  --page: #e8e4da;
+  --body: #1d1c1a;
+  --digit: #2e2c29;
+  --function: #46433e;
+  --accent: #f2643a;
+  --text: #f3efe7;
+  --muted: #8d887d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--page);
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 24px;
+}
+
+@media (max-width: 480px), (max-height: 560px) and (orientation: landscape) {
+  html {
+    background: var(--body);
+  }
+
+  main {
+    padding: 0;
+  }
+}

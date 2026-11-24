@@ -1,0 +1,151 @@
+.calculator {
+  --value-max: 4.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(100%, 360px);
+  padding: 20px;
+  border-radius: 28px;
+  background: var(--body);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.2),
+    0 24px 48px -16px rgb(0 0 0 / 0.35);
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 4px;
+  min-height: 128px;
+  padding: 8px 6px 0;
+  container-type: inline-size;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Long expressions overflow to the left so the latest input stays visible. */
+.expression {
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-end;
+  min-height: 1.5em;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 1.125rem;
+  mask-image: linear-gradient(to right, transparent, #000 24px);
+}
+
+/* Shrinks to fit the display width as the number grows. */
+.value {
+  color: var(--text);
+  font-size: min(var(--value-max), 100cqi / (var(--length) * 0.62));
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.key {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 18px;
+  background: var(--digit);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.5rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    filter 120ms,
+    transform 80ms;
+}
+
+.key[data-variant="function"] {
+  background: var(--function);
+}
+
+.key[data-variant="operator"] {
+  background: color-mix(in srgb, var(--accent) 16%, var(--body));
+  color: var(--accent);
+  font-size: 1.75rem;
+}
+
+.key[data-variant="equals"] {
+  background: var(--accent);
+  color: var(--body);
+  font-size: 1.75rem;
+}
+
+@media (hover: hover) {
+  .key:hover {
+    filter: brightness(1.15);
+  }
+}
+
+.key:active {
+  filter: brightness(1.3);
+  transform: scale(0.95);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Phones in portrait: fill the screen, keys sit at the bottom within thumb reach. */
+@media (max-width: 480px) {
+  .calculator {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 24px 16px max(16px, env(safe-area-inset-bottom));
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .display {
+    flex: 1;
+  }
+}
+
+/* Phones in landscape: keys stretch to fill the short height instead of staying square. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .calculator {
+    --value-max: 2.75rem;
+
+    width: min(100%, 640px);
+    height: 100dvh;
+    gap: 8px;
+    padding: 12px max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .display {
+    min-height: 0;
+  }
+
+  .keys {
+    flex: 1;
+    grid-auto-rows: 1fr;
+    gap: 8px;
+  }
+
+  .key {
+    aspect-ratio: auto;
+    border-radius: 12px;
+    font-size: 1.25rem;
+  }
+}
